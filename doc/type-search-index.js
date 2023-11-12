@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"jchart","l":"JBarChart"},{"p":"jchart","l":"JBoxChart"},{"p":"jchart","l":"JChart"},{"p":"jchart","l":"JLineChart"},{"p":"jchart","l":"JPieChart"},{"p":"jchart","l":"JScatterChart"}];updateSearchResults();
