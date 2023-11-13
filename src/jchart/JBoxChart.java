@@ -18,13 +18,30 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.List;
 
+
+/**
+ * The JBoxChart class, extends the JChart class.
+ * @author Mees Mosseveld
+ *
+ */
 public class JBoxChart extends JChart {
 	private static final long serialVersionUID = 5138129585655295705L;
 	
+	/**
+	 * Vertical box chart.
+	 */
 	public static final int BOX_CHART_STYLE_VERTICAL   = 0;
+	
+	/**
+	 * Horizontal box chart.
+	 */
 	public static final int BOX_CHART_STYLE_HORIZONTAL = 1;
 
-	
+	/**
+	 * Create JBoxChart.
+	 * @param name The name of the box chart.
+	 * @param boxChartStyle The style of the box chart, BOX_CHART_STYLE_VERTICAL or BOX_CHART_STYLE_HORIZONTAL.
+	 */
 	public JBoxChart(String name, int boxChartStyle) {
 		super(name);
 		chartPlot = new JBoxChartPlot(name, boxChartStyle);

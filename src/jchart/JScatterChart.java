@@ -18,11 +18,28 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.List;
 
+
+/**
+ * The JScatterChart class, extends the JChart class.
+ * @author Mees Mosseveld
+ *
+ */
 public class JScatterChart extends JChart {
 	private static final long serialVersionUID = 8319989111277698598L;
 	
+	/**
+	 * Point style dot.
+	 */
 	public static final int POINT_STYLE_DOT     = 0;
+	
+	/**
+	 * Point style square.
+	 */
 	public static final int POINT_STYLE_SQUARE  = 1;
+	
+	/**
+	 * Point style diamond.
+	 */
 	public static final int POINT_STYLE_DIAMOND = 2;
 
 

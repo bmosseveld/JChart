@@ -37,10 +37,11 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+
 /**
  * This the main abstract class of the JChart library and is an extension
  * of the JPanel class.
- * @author Mees  Mosseveld
+ * @author Mees Mosseveld
  *
  */
 public abstract class JChart extends JPanel {
@@ -48,17 +49,43 @@ public abstract class JChart extends JPanel {
 	
 	
 	private static final String VERSION = "1.0.0";
+
 	
-	
+	/**
+	 * Left alignment of the title.
+	 */
 	public static final int TITLE_ALIGNMENT_LEFT   = 0;
-	public static final int TITLE_ALIGNMENT_CENTER = 1;
-	public static final int TITLE_ALIGNMENT_RIGHT  = 2;
 	
+	/**
+	 * Center alignment of the title.
+	 */
+	public static final int TITLE_ALIGNMENT_CENTER = 1;
+	
+	/**
+	 * Right alignment of the title.
+	 */
+	public static final int TITLE_ALIGNMENT_RIGHT  = 2;
+
+	
+	/**
+	 * Set the title at the top of the chart.
+	 */
 	public static final int TITLE_POSITION_TOP     = 0;
+	
+	/**
+	 * Set the title at the bottom of the chart.
+	 */
 	public static final int TITLE_POSITION_BOTTOM  = 1;
 
 	
+	/**
+	 * The name of the chart.
+	 */
 	protected String name = null;
+	
+	/**
+	 * The plot of the chart.
+	 */
 	protected JChartPlot chartPlot = null;
 	
 	

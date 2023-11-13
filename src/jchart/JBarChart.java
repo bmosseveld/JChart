@@ -20,20 +20,51 @@ import java.util.List;
 
 
 /**
- * This is the class of the bar chart.
+ * The JBarChart class, extends the JChart class.
  * @author Mees Mosseveld
  *
  */
 public class JBarChart extends JChart {
 	private static final long serialVersionUID = -3531649545408358060L;
 	
+	/**
+	 * Vertical 2D bar chart.
+	 */
 	public static final int BAR_CHART_STYLE_VERTICAL              = 0;
+	
+	/**
+	 * Horizontal 2D bar chart.
+	 */
 	public static final int BAR_CHART_STYLE_HORIZONTAL            = 1;
+	
+	/**
+	 * Vertical 2D stacked bar chart.
+	 */
 	public static final int BAR_CHART_STYLE_STACKED_VERTICAL      = 2;
+	
+	/**
+	 * Horizontal 2D stacked bar chart.
+	 */
 	public static final int BAR_CHART_STYLE_STACKED_HORIZONTAL    = 3;
+	
+	/**
+	 * Vertical 3D bar chart.
+	 */
 	public static final int BAR_CHART_STYLE_3D_VERTICAL           = 4;
+	
+	/**
+	 * Horizontal 3D bar chart.
+	 */
 	public static final int BAR_CHART_STYLE_3D_HORIZONTAL         = 5;
+	
+	/**
+	 * Vertical 3D stacked bar chart.
+	 */
 	public static final int BAR_CHART_STYLE_3D_STACKED_VERTICAL   = 6;
+	
+	/**
+	 * Horizontal 3D stacked bar chart.
+	 */
 	public static final int BAR_CHART_STYLE_3D_STACKED_HORIZONTAL = 7;
 
 

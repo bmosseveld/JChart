@@ -20,19 +20,41 @@ import java.util.List;
 
 
 /**
- * This is the class of the line chart.
+ * The JLineChart class, extends the JChart class.
  * @author Mees Mosseveld
  *
  */
 public class JLineChart extends JChart {
 	private static final long serialVersionUID = -7368689193402892710L;
 	
+	/**
+	 * Point style dot.
+	 */
 	public static final int POINT_STYLE_DOT     = 0;
+	
+	/**
+	 * Point style square.
+	 */
 	public static final int POINT_STYLE_SQUARE  = 1;
+	
+	/**
+	 * Point style diamond.
+	 */
 	public static final int POINT_STYLE_DIAMOND = 2;
+	
+	/**
+	 * Point style none.
+	 */
 	public static final int POINT_STYLE_NONE    = 3;
-
+	
+	/**
+	 * Line style line.
+	 */
 	public static final int LINE_CHART_STYLE_LINE    = 0;
+	
+	/**
+	 * Line style stacked area.
+	 */
 	public static final int LINE_CHART_STYLE_STACKED = 1;
 	
 	
