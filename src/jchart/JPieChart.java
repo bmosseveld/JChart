@@ -19,7 +19,7 @@ import java.awt.Font;
 
 
 /**
- * This is the class of the pie chart.
+ * Use this class to create a pie chart.
  * @author Mees Mosseveld
  *
  */

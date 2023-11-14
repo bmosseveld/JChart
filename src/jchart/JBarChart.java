@@ -20,7 +20,7 @@ import java.util.List;
 
 
 /**
- * The JBarChart class, extends the JChart class.
+ * Use this class to create a bar chart.
  * @author Mees Mosseveld
  *
  */

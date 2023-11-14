@@ -20,7 +20,7 @@ import java.util.List;
 
 
 /**
- * The JBoxChart class, extends the JChart class.
+ * Use this class to create a box plot.
  * @author Mees Mosseveld
  *
  */

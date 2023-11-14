@@ -20,7 +20,7 @@ import java.util.List;
 
 
 /**
- * The JScatterChart class, extends the JChart class.
+ * Use this class to create a scatterplot.
  * @author Mees Mosseveld
  *
  */
