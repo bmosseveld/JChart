@@ -66,25 +66,6 @@ public class Test {
 	}
 	
 	
-	private List<JChart> functionLineCharts() {
-		List<JChart> charts = new ArrayList<JChart>();
-
-		charts.add(lineChartParabole());
-		charts.add(lineChartGoniometric());
-
-		return charts;
-	}
-	
-	
-	private List<JChart> scatterCharts() {
-		List<JChart> charts = new ArrayList<JChart>();
-
-		charts.add(scatterChartFixedAxesPositiveOnly());
-
-		return charts;
-	}
-	
-	
 	private List<JChart> barChartsFixedAxis() {
 		List<JChart> charts = new ArrayList<JChart>();
 
@@ -120,8 +101,10 @@ public class Test {
 	private List<JChart> pieCharts() {
 		List<JChart> charts = new ArrayList<JChart>();
 
-		charts.add(pieChart1());
-		charts.add(pieChart2());
+		//charts.add(pieChart1(JPieChart.PIE_CHART_STYLE_2D));
+		//charts.add(pieChart2(JPieChart.PIE_CHART_STYLE_2D));
+		//charts.add(pieChart1(JPieChart.PIE_CHART_STYLE_3D));
+		charts.add(pieChart2(JPieChart.PIE_CHART_STYLE_3D));
 		
 		return charts;
 	}
@@ -147,18 +130,24 @@ public class Test {
 	private List<JChart> exampleLineCharts() {
 		List<JChart> charts = new ArrayList<JChart>();
 		
-		charts.add(lineChartFixedAxes());
-		charts.add(lineChartTestStacked(true, true));
+		charts.addAll(lineCharts());
+		charts.addAll(stackedLineCharts());
+		
+		//charts.add(lineChartFixedAxes());
+		//charts.add(lineChartTestStacked(true, true));
 
 		charts.add(lineChartParabole());
 		charts.add(lineChartGoniometric());
 		
-		charts.add(boxChart1(true, JBoxChart.BOX_CHART_STYLE_VERTICAL));
-		charts.add(boxChart2(true, JBoxChart.BOX_CHART_STYLE_HORIZONTAL));
+		return charts;
+	}
+	
+	
+	private List<JChart> exampleScatterCharts() {
+		List<JChart> charts = new ArrayList<JChart>();
 		
 		charts.add(scatterChartFixedAxesPositiveOnly());
-		
-		charts.add(pieChart1());
+		charts.add(scatterChartFreeAxesPositiveOnly());
 		
 		return charts;
 	}
@@ -187,12 +176,12 @@ public class Test {
 		frame = new JFrame(title);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
-		Dimension frameSize = new Dimension(charts.size() < 3 ? 465 : (charts.size() < 5 ? 930 : (charts.size() < 7 ? 1395 : 1860)),900);
+		Dimension frameSize = new Dimension(charts.size() < 3 ? 465 : (charts.size() < 5 ? 930 : (charts.size() < 7 ? 1395 : 1860)), 900);
 		frame.setSize(frameSize);
 		frame.setMinimumSize(frameSize);
 		frame.setPreferredSize(frameSize);
 		
-		JPanel graphicsPanel = new JPanel(new GridLayout(0, charts.size() < 3 ? 1 : (charts.size() < 5 ? 2 : (charts.size() < 7 ? 3 : 4))));
+		JPanel graphicsPanel = new JPanel(new GridLayout(0, charts.size() < 3 ? 1 : (charts.size() < 5 ? 2 : (charts.size() < 7 ? 3 : (charts.size() < 9 ? 4 : 5)))));
 		for (JChart chart : charts) {
 			chart.setBorder(BorderFactory.createTitledBorder(chart.chartGetName()));
 			graphicsPanel.add(chart);
@@ -616,8 +605,8 @@ public class Test {
 	}
 	
 	
-	private JPieChart pieChart1() {
-		JPieChart pieChart = new JPieChart("PieChart");
+	private JPieChart pieChart1(int style) {
+		JPieChart pieChart = new JPieChart((style == JPieChart.PIE_CHART_STYLE_2D ? "2D" : "3D") + " PieChart", style);
 		
 		pieChart.chartAddDataSet("Pie 3", Color.GREEN);
 		pieChart.chartAddDataSet("Pie 2", Color.BLUE);
@@ -642,8 +631,8 @@ public class Test {
 	}
 	
 	
-	private JPieChart pieChart2() {
-		JPieChart pieChart = new JPieChart("PieChart");
+	private JPieChart pieChart2(int style) {
+		JPieChart pieChart = new JPieChart((style == JPieChart.PIE_CHART_STYLE_2D ? "2D" : "3D") + " PieChart Months", style);
 		
 		pieChart.chartAddDataSet("January", Color.RED);
 		pieChart.chartAddDataPoint("January", 31);
@@ -1189,6 +1178,67 @@ public class Test {
 		return scatterChart;
 	}
 	
+	
+	private JScatterChart scatterChartFreeAxesPositiveOnly() {
+		JScatterChart scatterChart = new JScatterChart("ScatterChart Free Axes Positive Only");
+		
+		scatterChart.chartAddDataSet("Line 1", Color.RED);
+		scatterChart.chartSetPointStyle("Line 1", JScatterChart.POINT_STYLE_DOT);
+		scatterChart.chartAddDataPoint("Line 1", 0, 20);
+		scatterChart.chartAddDataPoint("Line 1", 1, 22);
+		scatterChart.chartAddDataPoint("Line 1", 2, 15);
+		scatterChart.chartAddDataPoint("Line 1", 3, 24);
+		scatterChart.chartAddDataPoint("Line 1", 4, 18);
+		
+		scatterChart.chartAddDataSet("Line 2", Color.BLUE);
+		scatterChart.chartSetPointStyle("Line 2", JScatterChart.POINT_STYLE_DIAMOND);
+		scatterChart.chartAddDataPoint("Line 2", 0, 25);
+		scatterChart.chartAddDataPoint("Line 2", 1, 21);
+		scatterChart.chartAddDataPoint("Line 2", 2, 3);
+		scatterChart.chartAddDataPoint("Line 2", 3, 19);
+		scatterChart.chartAddDataPoint("Line 2", 4, 13);
+		
+		scatterChart.chartAddDataSet("Line 3", Color.GREEN);
+		scatterChart.chartSetPointStyle("Line 3", JScatterChart.POINT_STYLE_SQUARE);
+		scatterChart.chartAddDataPoint("Line 3", 0, 12);
+		scatterChart.chartAddDataPoint("Line 3", 1, 23);
+		scatterChart.chartAddDataPoint("Line 3", 2, 10);
+		scatterChart.chartAddDataPoint("Line 3", 3, 11);
+		scatterChart.chartAddDataPoint("Line 3", 4, 20);
+		
+		scatterChart.chartAddDataSet("Line 4", Color.YELLOW);
+		scatterChart.chartSetPointStyle("Line 4", JScatterChart.POINT_STYLE_DOT);
+		scatterChart.chartAddDataPoint("Line 4", 0, 9);
+		scatterChart.chartAddDataPoint("Line 4", 1, 5);
+		scatterChart.chartAddDataPoint("Line 4", 2, 7);
+		scatterChart.chartAddDataPoint("Line 4", 3, 10);
+		scatterChart.chartAddDataPoint("Line 4", 4, 12);
+		
+		scatterChart.chartAddDataSet("Line 5", Color.CYAN);
+		scatterChart.chartSetPointStyle("Line 5", JScatterChart.POINT_STYLE_DIAMOND);
+		scatterChart.chartAddDataPoint("Line 5", 0, 21);
+		scatterChart.chartAddDataPoint("Line 5", 1, 20);
+		scatterChart.chartAddDataPoint("Line 5", 2, 23);
+		scatterChart.chartAddDataPoint("Line 5", 3, 25);
+		scatterChart.chartAddDataPoint("Line 5", 4, 24);
+		
+		scatterChart.chartSetHorizontalAxisPrecision(TEST_PRECISION);
+		scatterChart.chartSetVerticalAxisPrecision(TEST_PRECISION);
+		
+		//scatterChart.chartSetHorizontalAxis(0, 4, 1, 0);
+		//scatterChart.chartSetVerticalAxis(0, 30, 1, 0);
+		
+		scatterChart.chartSetHorizontalAxisLabel("Unit X");
+		scatterChart.chartSetVerticalAxisLabel("Unit Y");
+		
+		if (SHOW_TITLE) {
+			scatterChart.chartSetTitle(scatterChart.chartGetName(), TITLE_ALIGNMENT, TITLE_POSITION);
+		}
+		scatterChart.chartSetLegendEnabled(SHOW_LEGEND);
+		
+		return scatterChart;
+	}
+	
 
 	public static void main(String[] args) {
 		Test t = new Test();
@@ -1196,27 +1246,14 @@ public class Test {
 		JChart dummyChart = t.lineChartFixedAxes();
 		System.out.println(dummyChart.chartGetVersion());
 		System.out.println(dummyChart.chartGetLicense());
-		/**/
-		List<JChart> lineCharts = new ArrayList<JChart>();
-		lineCharts.addAll(t.lineCharts());
-		lineCharts.addAll(t.stackedLineCharts());
-		t.showCharts("Line Charts", lineCharts);
 		
-		List<JChart> functionScatterCharts = new ArrayList<JChart>();
-		functionScatterCharts.addAll(t.functionLineCharts());
-		functionScatterCharts.addAll(t.scatterCharts());
-		t.showCharts("Function and Scatter Charts", functionScatterCharts);
-		/**/
-		t.showCharts("Bar Charts Fixed Axis", t.barChartsFixedAxis());
-		/**/
-		t.showCharts("Bar Charts Free Axis", t.barChartsFreeAxis());
+		//t.showCharts("Bar Charts Fixed Axis", t.barChartsFixedAxis());
+		//t.showCharts("Bar Charts Free Axis", t.barChartsFreeAxis());
 		t.showCharts("Pie Charts", t.pieCharts());
-		/**/
-		t.showCharts("Box Charts", t.boxCharts());
-		/**/
-		t.showCharts("Example Charts", t.exampleLineCharts());
-		t.showCharts("Example Bar Charts", t.exampleBarCharts());
-		/**/
+		//t.showCharts("Box Charts", t.boxCharts());
+		//t.showCharts("Example Line Charts", t.exampleLineCharts());
+		//t.showCharts("Example Bar Charts", t.exampleBarCharts());
+		//t.showCharts("Example Scatter Charts", t.exampleScatterCharts());
 	}
 
 }

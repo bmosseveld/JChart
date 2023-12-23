@@ -31,6 +31,7 @@ class JPieChartPlot extends JChartPlot {
 	
 	private Map<String, Double> dataSet = null;
 	
+	private int style = JPieChart.PIE_CHART_STYLE_2D;
 	private int valuePrecision = STANDARD_PRECISION;
 	private String unitDescription = null;
 	private Color valueColor = Color.BLACK;
@@ -38,8 +39,9 @@ class JPieChartPlot extends JChartPlot {
 	private Color outlineColor = Color.BLACK;
 
 	
-	public JPieChartPlot(String name) {
+	public JPieChartPlot(String name, int pieChartStyle) {
 		super(name);
+		style = pieChartStyle;
 	}
 	
 	
@@ -88,6 +90,17 @@ class JPieChartPlot extends JChartPlot {
 	
 	@Override
 	void draw(Graphics graphics) {
+		if (style == JPieChart.PIE_CHART_STYLE_2D) {
+			draw2D(graphics);
+		}
+		else if (style == JPieChart.PIE_CHART_STYLE_3D) {
+			draw3D(graphics);
+		}
+	}
+	
+	
+
+	private void draw2D(Graphics graphics) {
 		final int VALUE_LINE_EXTRA_LENGTH = 6;
 		final int VALUE_LINE_GAP = 2;
 		
@@ -157,20 +170,21 @@ class JPieChartPlot extends JChartPlot {
 			for (String dataSetName : orderedDataSets) {
 				double value = dataSet.get(dataSetName);
 				String valueString = formatValue(value, valuePrecision) + (unitDescription == null ? "" : (" " + unitDescription));
-				int arcAngle = (int) round((value / total) * 360, 0);
+				int arcAngle = (int) round((value / total) * 360.0, 0);
 				
 				
 				// Draw pie piece
 				graphics.setColor(dataSets.get(dataSetName));
 				graphics.fillArc(pieX, pieY, pieSize, pieSize, angle, -arcAngle);
+				//System.out.println(name + ", " + dataSetName + ", " + Double.toString(value) + ", " + Double.toString(total) + ", " + Integer.toString(angle) + ", " + Double.toString((value / total) * 360.0) + ", " + Integer.toString(arcAngle));
 				
 				// Draw line and value
 				int valueLineAngle = angle - (int) round(arcAngle / 2.0, 0);
-				int valueLineStartX = pieCenterX + (int) round((pieSize / 4) * Math.cos(((valueLineAngle) / 369.0) * 2 * Math.PI), 0);
+				int valueLineStartX = pieCenterX + (int) round((pieSize / 4) * Math.cos(((valueLineAngle) / 360.0) * 2 * Math.PI), 0);
 				int valueLineStartY = pieCenterY - (int) round((pieSize / 4) * Math.sin(((valueLineAngle) / 360.0) * 2 * Math.PI), 0);
-				int valueLineEndX = pieCenterX + (int) round(((pieSize / 2) + VALUE_LINE_EXTRA_LENGTH) * Math.cos(((valueLineAngle) / 360.0) * 2 *Math.PI), 0);
+				int valueLineEndX = pieCenterX + (int) round(((pieSize / 2) + VALUE_LINE_EXTRA_LENGTH) * Math.cos(((valueLineAngle) / 360.0) * 2 * Math.PI), 0);
 				int valueLineEndY = pieCenterY - (int) round(((pieSize / 2) + VALUE_LINE_EXTRA_LENGTH) * Math.sin(((valueLineAngle) / 360.0) * 2 * Math.PI), 0);
-				int valueX = pieCenterX + (int) round(((pieSize / 2) + VALUE_LINE_EXTRA_LENGTH + VALUE_LINE_GAP) * Math.cos(((valueLineAngle) / 360.0) * 2 *Math.PI), 0);
+				int valueX = pieCenterX + (int) round(((pieSize / 2) + VALUE_LINE_EXTRA_LENGTH + VALUE_LINE_GAP) * Math.cos(((valueLineAngle) / 360.0) * 2 * Math.PI), 0);
 				if (valueX < pieCenterX) {
 					valueX = valueX - fontMetrics.stringWidth(valueString);
 				}
@@ -184,6 +198,162 @@ class JPieChartPlot extends JChartPlot {
 			}
 			graphics.setColor(outlineColor);
 			graphics.drawArc(pieX, pieY, pieSize, pieSize, 0, 360);
+		}
+	}
+	
+	
+
+	private void draw3D(Graphics graphics) {
+		final int VALUE_LINE_EXTRA_LENGTH = 6;
+		final int VALUE_LINE_GAP = 2;
+		
+		//Set background color
+		graphics.setColor(chartBackgroundColor);
+		graphics.fillRect(0, 0, getWidth(), getHeight());
+		
+		if (dataSet != null) {
+			int leftBottomX = MARGIN;
+			int leftBottomY = getHeight() - MARGIN;
+			int width = getWidth() - (2 * MARGIN);
+			int height = getHeight() - (2 * MARGIN);
+
+			List<String> orderedDataSets = new ArrayList<String>();
+			orderedDataSets.addAll(dataSetList);
+			if (orderDataSets) {
+				Collections.sort(orderedDataSets);
+			}
+			
+			Dimension changesYAndHeihght = showTitle(graphics, leftBottomX, leftBottomY, width, height);
+			leftBottomY = changesYAndHeihght.width;
+			height = changesYAndHeihght.height;
+			
+			int legendWidth = showLegendRightTop(graphics, leftBottomX + width, leftBottomY - height); 
+			width = width - legendWidth;
+
+			FontMetrics fontMetrics = graphics.getFontMetrics(valueFont);
+			int maxValueWidth = 0;
+			double total = 0;
+			for (String dataSetName : orderedDataSets) {
+				double value = dataSet.get(dataSetName);
+				maxValueWidth = fontMetrics.stringWidth(formatValue(value, valuePrecision) + (unitDescription == null ? "" : (" " + unitDescription)));
+				total += value;
+			}
+			
+			// Draw data
+			int pieSize = Math.min(width - (2 * (maxValueWidth + VALUE_LINE_GAP + VALUE_LINE_EXTRA_LENGTH)), height - (2 * (fontMetrics.getHeight() + VALUE_LINE_GAP)));
+			int pieX = leftBottomX + ((width - pieSize ) / 2);
+			int pieYTop = leftBottomY  - height + ((height - pieSize) / 2);
+			int pieYBottom = leftBottomY  - height + (height - pieSize);
+			int pieCenterX = pieX + (pieSize / 2);
+			int pieCenterYTop = pieYTop + (pieSize / 4);
+			int pieCenterYBottom = pieYBottom + (pieSize / 4);
+			int pieHeight = pieCenterYBottom - pieCenterYTop;
+			
+			if (JChartPlot.DEBUG) {
+				System.out.println();
+				System.out.println(name);
+				System.out.println("PanelWidth       = " + Integer.toString(getWidth()));
+				System.out.println("PanelHeight      = " + Integer.toString(getHeight()));
+				System.out.println("MARGIN           = " + Integer.toString(MARGIN));
+				System.out.println("AXIS_VALUE_GAP   = " + Integer.toString(AXIS_VALUE_GAP));
+				System.out.println("FontHeight       = " + Integer.toString(graphics.getFontMetrics(valueFont).getHeight()));
+				System.out.println("pieSize          = " + Integer.toString(pieSize));
+				System.out.println("pieX             = " + Integer.toString(pieX));
+				System.out.println("pieY             = " + Integer.toString(pieYTop));
+				System.out.println("pieY             = " + Integer.toString(pieYBottom));
+				System.out.println("pieCenterX       = " + Integer.toString(pieCenterX));
+				System.out.println("pieCenterYTop    = " + Integer.toString(pieCenterYTop));
+				System.out.println("pieCenterYBottom = " + Integer.toString(pieCenterYBottom));
+				System.out.println("pieHeight        = " + Integer.toString(pieHeight));
+				System.out.println("leftBottomyTitle = " + Integer.toString((int) changesYAndHeihght.getWidth()));
+				System.out.println("heightTitle      = " + Integer.toString((int) changesYAndHeihght.getHeight()));
+				System.out.println("legendWidth      = " + Integer.toString(legendWidth));
+				System.out.println("leftBottomX      = " + Integer.toString(leftBottomX));
+				System.out.println("leftBottomY      = " + Integer.toString(leftBottomY));
+				System.out.println("width            = " + Integer.toString(width));
+				System.out.println("height           = " + Integer.toString(height));
+				System.out.println();
+			}
+			
+			// Draw bottom outline
+			graphics.setColor(outlineColor);
+			graphics.drawArc(pieX, pieYBottom, pieSize, pieSize / 2, 3, -186);
+			
+			// Draw top
+			int angle = 90;
+			for (String dataSetName : orderedDataSets) {
+				double value = dataSet.get(dataSetName);
+				String valueString = formatValue(value, valuePrecision) + (unitDescription == null ? "" : (" " + unitDescription));
+				int arcAngle = (int) round((value / total) * 360, 0);
+				
+				// Draw pie piece
+				graphics.setColor(dataSets.get(dataSetName));
+				graphics.fillArc(pieX, pieYTop, pieSize, pieSize / 2, angle, -arcAngle);
+				
+				// Draw boundary of pie side
+				int endAngle = angle - arcAngle;
+				graphics.setColor(outlineColor);
+				
+				if (JChartPlot.DEBUG) {
+					System.out.println(dataSetName + ":");
+					System.out.println("  angle        = " + Integer.toString(angle));
+					System.out.println("  endAngle     = " + Integer.toString(endAngle));
+				}
+				
+				if (((angle  < 0) && (angle > -180)) || ((endAngle  < 0) && (endAngle > -180))) {
+					int startYTop = pieCenterYTop - (int) round((pieSize/ 4) * Math.sin(((angle) / 360.0) * 2 * Math.PI), 0);
+					int startX = pieCenterX + (int) round((pieSize/ 2) * Math.cos(((angle) / 360.0) * 2 * Math.PI), 0);
+					int endX = pieCenterX + (int) round((pieSize/ 2) * Math.cos(((angle - arcAngle) / 360.0) * 2 * Math.PI), 0);
+					int endYTop = pieCenterYTop - (int) round((pieSize/ 4) * Math.sin(((angle - arcAngle) / 360.0) * 2 * Math.PI), 0);
+					
+					if (JChartPlot.DEBUG) {
+						System.out.println("  startX       = " + Integer.toString(startX));
+						System.out.println("  startYTop    = " + Integer.toString(startYTop));
+						System.out.println("  endX         = " + Integer.toString(endX));
+						System.out.println("  endYTop      = " + Integer.toString(endYTop));
+					}
+					
+					if (startYTop <= pieCenterYTop) {
+						startX = pieCenterX + (pieSize / 2);
+						if (JChartPlot.DEBUG) {
+							System.out.println("  NEW startX   = " + Integer.toString(startX));
+						}
+					}
+					if (endYTop <= pieCenterYTop) {
+						endX = pieCenterX - (pieSize / 2);
+						if (JChartPlot.DEBUG) {
+							System.out.println("  NEW endX     = " + Integer.toString(endX));
+						}
+					}
+					
+					graphics.drawLine(startX, startYTop, startX, startYTop + pieHeight);
+					graphics.drawLine(endX, endYTop, endX, endYTop + pieHeight);
+					//floodFill(this, startX - 2, (startYTop + pieHeight) / 2, dataSets.get(dataSetName), outlineColor, JChartPlot.FLOODFILL_STYLE_4_WAY);
+					
+				}
+				/*
+				// Draw line and value
+				int valueLineAngle = angle - (int) round(arcAngle / 2.0, 0);
+				int valueLineStartX = pieCenterX + (int) round((pieSize / 4) * Math.cos(((valueLineAngle) / 360.0) * 2 * Math.PI), 0);
+				int valueLineStartY = pieCenterYTop - (int) round((pieSize / 8) * Math.sin(((valueLineAngle) / 360.0) * 2 * Math.PI), 0);
+				int valueLineEndX = pieCenterX + (int) round(((pieSize / 2) + VALUE_LINE_EXTRA_LENGTH) * Math.cos(((valueLineAngle) / 360.0) * 2 * Math.PI), 0);
+				int valueLineEndY = pieCenterYTop - (int) round(((pieSize / 4) + VALUE_LINE_EXTRA_LENGTH) * Math.sin(((valueLineAngle) / 360.0) * 2 * Math.PI), 0);
+				int valueX = pieCenterX + (int) round(((pieSize / 2) + VALUE_LINE_EXTRA_LENGTH + VALUE_LINE_GAP) * Math.cos(((valueLineAngle) / 360.0) * 2 * Math.PI), 0);
+				if (valueX < pieCenterX) {
+					valueX = valueX - fontMetrics.stringWidth(valueString);
+				}
+				int valueY = pieCenterYTop - (int) round(((pieSize / 4) + VALUE_LINE_EXTRA_LENGTH + VALUE_LINE_GAP) * Math.sin(((valueLineAngle) / 360.0) * 2 * Math.PI), 0) + (fontMetrics.getHeight() / 2);
+				graphics.setColor(valueColor);
+				graphics.setFont(valueFont);
+				graphics.drawLine(valueLineStartX, valueLineStartY, valueLineEndX, valueLineEndY);
+				graphics.drawString(valueString, valueX, valueY);
+				*/
+				angle = endAngle;
+			}
+			
+			// Draw top outline
+			graphics.setColor(outlineColor);
+			graphics.drawArc(pieX, pieYTop, pieSize, pieSize / 2, 0, 360);
 		}
 	}
 	

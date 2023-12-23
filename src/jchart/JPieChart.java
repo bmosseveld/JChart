@@ -25,15 +25,25 @@ import java.awt.Font;
  */
 public class JPieChart extends JChart {
 	private static final long serialVersionUID = 5259909585084828307L;
+	
+	/**
+	 * 2D pie chart.
+	 */
+	public static final int PIE_CHART_STYLE_2D = 0;
+	
+	/**
+	 * 3D pie chart.
+	 */
+	public static final int PIE_CHART_STYLE_3D = 1;
 
 
 	/**
 	 * Creates a pie chart with the specified name.
 	 * @param name The name of the chart.
 	 */
-	public JPieChart(String name) {
+	public JPieChart(String name, int pieChartStyle) {
 		super(name);
-		chartPlot = new JPieChartPlot(this.name);
+		chartPlot = new JPieChartPlot(this.name, pieChartStyle);
 		add(chartPlot, BorderLayout.CENTER);
 	}
 	

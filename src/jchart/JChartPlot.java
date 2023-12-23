@@ -19,6 +19,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -47,12 +48,15 @@ import javax.swing.filechooser.FileFilter;
 abstract class JChartPlot extends JPanel {
 	private static final long serialVersionUID = -1438448602003395056L;
 	
-	protected static final boolean DEBUG = false;
+	protected static final boolean DEBUG = true;
 	
 	protected static final int MARGIN             = 5;
 	protected static final int LABEL_AXIS_GAP     = 4;
 	protected static final int STANDARD_PRECISION = 1;
 	protected static final int AXIS_VALUE_GAP     = 4;
+	
+	protected static final int FLOODFILL_STYLE_4_WAY = 0;
+	protected static final int FLOODFILL_STYLE_8_WAY = 1;
 
 	protected String name = null;
 	protected String title = null;
@@ -488,6 +492,47 @@ abstract class JChartPlot extends JPanel {
 		graphics.setFont(errorFont);
 		graphics.drawString("ERROR", (getWidth() / 2) - (fontMetrics.stringWidth("ERROR") / 2), (getHeight()/ 2) - (fontMetrics.getHeight() / 2));
 		setToolTipText(error);
+	}
+	
+	
+	protected void floodFill(JPanel panel, int seedX, int seedY, Color color, Color boundaryColor, int style) {
+		final int X = 0;
+		final int Y = 1;
+		// Get current image of panel
+		BufferedImage panelImage = new BufferedImage(panel.getWidth(), panel.getHeight(), BufferedImage.TYPE_INT_RGB);
+		Graphics2D panelImageGraphics = panelImage.createGraphics();
+		panel.paint(panelImageGraphics);
+		panelImageGraphics.dispose();
+		int boundaryRGB = boundaryColor.getRGB();
+
+		// Set color
+		panel.getGraphics().setColor(color);
+
+		if (panelImage.getRGB(seedX, seedY) != boundaryRGB) {
+			// Create stack
+			List<int[]> stack = new ArrayList<int[]>();
+			// Add seed point to stack
+			stack.add(new int[] { seedX, seedY });
+			
+			// Loop until stack is empty
+			while (stack.size() > 0) {
+				int[] point = stack.get(0);
+				panel.getGraphics().drawLine(point[X], point[Y], point[X], point[Y]);
+				stack.remove(0);
+				// style == FLOODFILL_STYLE_4_WAY or FLOODFILL_STYLE_8_WAY
+				if (panelImage.getRGB(point[X] - 1, point[Y]    ) != boundaryRGB) stack.add(new int[] { point[X] - 1, point[Y]     });
+				if (panelImage.getRGB(point[X] + 1, point[Y]    ) != boundaryRGB) stack.add(new int[] { point[X] + 1, point[Y]     });
+				if (panelImage.getRGB(point[X]    , point[Y] - 1) != boundaryRGB) stack.add(new int[] { point[X]    , point[Y] - 1 });
+				if (panelImage.getRGB(point[X    ], point[Y] - 1) != boundaryRGB) stack.add(new int[] { point[X]    , point[Y] - 1 });
+				if (style == FLOODFILL_STYLE_8_WAY) {
+					if (panelImage.getRGB(point[X] - 1, point[Y] - 1) != boundaryRGB) stack.add(new int[] { point[X] - 1, point[Y] - 1 });
+					if (panelImage.getRGB(point[X] + 1, point[Y] - 1) != boundaryRGB) stack.add(new int[] { point[X] + 1, point[Y] - 1 });
+					if (panelImage.getRGB(point[X] - 1, point[Y] + 1) != boundaryRGB) stack.add(new int[] { point[X] - 1, point[Y] + 1 });
+					if (panelImage.getRGB(point[X] + 1, point[Y] + 1) != boundaryRGB) stack.add(new int[] { point[X] + 1, point[Y] + 1 });
+				}
+			}
+		}
+		
 	}
 	
 	
