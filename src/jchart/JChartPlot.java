@@ -495,14 +495,10 @@ abstract class JChartPlot extends JPanel {
 	}
 	
 	
-	protected void floodFill(JPanel panel, int seedX, int seedY, Color color, Color boundaryColor, int style) {
+	protected void floodFill(JPanel panel, BufferedImage panelImage, int seedX, int seedY, Color color, Color boundaryColor, int style) {
 		final int X = 0;
 		final int Y = 1;
-		// Get current image of panel
-		BufferedImage panelImage = new BufferedImage(panel.getWidth(), panel.getHeight(), BufferedImage.TYPE_INT_RGB);
-		Graphics2D panelImageGraphics = panelImage.createGraphics();
-		panel.paint(panelImageGraphics);
-		panelImageGraphics.dispose();
+
 		int boundaryRGB = boundaryColor.getRGB();
 
 		// Set color

@@ -18,6 +18,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -206,6 +208,13 @@ class JPieChartPlot extends JChartPlot {
 	private void draw3D(Graphics graphics) {
 		final int VALUE_LINE_EXTRA_LENGTH = 6;
 		final int VALUE_LINE_GAP = 2;
+		final int X = 0;
+		final int Y = 1;
+		final int X_END = 2;
+		final int Y_END = 3;
+		
+		BufferedImage panelImage = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_RGB);
+		Graphics2D panelImageGraphics = panelImage.createGraphics();
 		
 		//Set background color
 		graphics.setColor(chartBackgroundColor);
@@ -279,6 +288,14 @@ class JPieChartPlot extends JChartPlot {
 			graphics.setColor(outlineColor);
 			graphics.drawArc(pieX, pieYBottom, pieSize, pieSize / 2, 3, -186);
 			
+			Map<String, int[]> floodfillSeeds = new HashMap<String, int[]>();
+			Map<String, int[]> valueLines = new HashMap<String, int[]>();
+			Map<String, int[]> valuePositions = new HashMap<String, int[]>();
+			Map<String, String> valueStrings = new HashMap<String, String>();
+			
+			panelImageGraphics.setColor(outlineColor);
+			panelImageGraphics.drawArc(pieX, pieYBottom, pieSize, pieSize / 2, 3, -186);
+			
 			// Draw top
 			int angle = 90;
 			for (String dataSetName : orderedDataSets) {
@@ -328,10 +345,15 @@ class JPieChartPlot extends JChartPlot {
 					
 					graphics.drawLine(startX, startYTop, startX, startYTop + pieHeight);
 					graphics.drawLine(endX, endYTop, endX, endYTop + pieHeight);
-					//floodFill(this, startX - 2, (startYTop + pieHeight) / 2, dataSets.get(dataSetName), outlineColor, JChartPlot.FLOODFILL_STYLE_4_WAY);
 					
+					panelImageGraphics.drawLine(startX, startYTop, startX, startYTop + pieHeight);
+					panelImageGraphics.drawLine(endX, endYTop, endX, endYTop + pieHeight);
+					floodfillSeeds.put(dataSetName, new int[] { startX - 2, (startYTop + startYTop - pieHeight) / 2 });
+					
+					//floodFill(this, startX - 2, (startYTop + pieHeight) / 2, dataSets.get(dataSetName), outlineColor, JChartPlot.FLOODFILL_STYLE_4_WAY);
+				
 				}
-				/*
+				
 				// Draw line and value
 				int valueLineAngle = angle - (int) round(arcAngle / 2.0, 0);
 				int valueLineStartX = pieCenterX + (int) round((pieSize / 4) * Math.cos(((valueLineAngle) / 360.0) * 2 * Math.PI), 0);
@@ -343,6 +365,11 @@ class JPieChartPlot extends JChartPlot {
 					valueX = valueX - fontMetrics.stringWidth(valueString);
 				}
 				int valueY = pieCenterYTop - (int) round(((pieSize / 4) + VALUE_LINE_EXTRA_LENGTH + VALUE_LINE_GAP) * Math.sin(((valueLineAngle) / 360.0) * 2 * Math.PI), 0) + (fontMetrics.getHeight() / 2);
+				
+				valueLines.put(dataSetName, new int[] { valueLineStartX, valueLineStartY, valueLineEndX, valueLineEndY });
+				valuePositions.put(dataSetName, new int[] { valueX, valueY });
+				valueStrings.put(dataSetName, valueString);
+				/*
 				graphics.setColor(valueColor);
 				graphics.setFont(valueFont);
 				graphics.drawLine(valueLineStartX, valueLineStartY, valueLineEndX, valueLineEndY);
@@ -354,6 +381,23 @@ class JPieChartPlot extends JChartPlot {
 			// Draw top outline
 			graphics.setColor(outlineColor);
 			graphics.drawArc(pieX, pieYTop, pieSize, pieSize / 2, 0, 360);
+			
+			panelImageGraphics.drawArc(pieX, pieYTop, pieSize, pieSize / 2, 0, 360);
+			panelImageGraphics.dispose();
+
+			for (String dataSetName : orderedDataSets) {
+				int[] floodfillSeed = floodfillSeeds.get(dataSetName);
+				if (floodfillSeed != null) {
+					floodFill(this, panelImage, floodfillSeed[X], floodfillSeed[Y], dataSets.get(dataSetName), outlineColor, JChartPlot.FLOODFILL_STYLE_4_WAY);
+				}
+
+				int[] valueLine = valueLines.get(dataSetName);
+				int[] valuePosition = valuePositions.get(dataSetName);
+				graphics.setColor(valueColor);
+				graphics.setFont(valueFont);
+				graphics.drawLine(valueLine[X], valueLine[Y], valueLine[X_END], valueLine[Y_END]);
+				graphics.drawString(valueStrings.get(dataSetName), valuePosition[X], valuePosition[Y]);
+			}
 		}
 	}
 	
