@@ -120,10 +120,10 @@ public class Test {
 		charts.add(boxChart1(true, JBoxChart.BOX_CHART_STYLE_HORIZONTAL));
 		charts.add(boxChart1(false, JBoxChart.BOX_CHART_STYLE_HORIZONTAL));
 
-		charts.add(boxChart2(true, JBoxChart.BOX_CHART_STYLE_VERTICAL));
-		charts.add(boxChart2(false, JBoxChart.BOX_CHART_STYLE_VERTICAL));
-		charts.add(boxChart2(true, JBoxChart.BOX_CHART_STYLE_HORIZONTAL));
-		charts.add(boxChart2(false, JBoxChart.BOX_CHART_STYLE_HORIZONTAL));
+		charts.add(boxChart2(true, JBoxChart.BOX_CHART_STYLE_VERTICAL, 50));
+		charts.add(boxChart2(false, JBoxChart.BOX_CHART_STYLE_VERTICAL, 50));
+		charts.add(boxChart2(true, JBoxChart.BOX_CHART_STYLE_HORIZONTAL, 50));
+		charts.add(boxChart2(false, JBoxChart.BOX_CHART_STYLE_HORIZONTAL, 50));
 		
 		return charts;
 	}
@@ -910,8 +910,8 @@ public class Test {
 	}
 	
 	
-	private JBoxChart boxChart2(boolean fixedAxis, int style) {
-		JBoxChart boxChart = new JBoxChart((style == JBoxChart.BOX_CHART_STYLE_VERTICAL ? "Vertical" : "Horozontal") + " BoxChart", style);
+	private JBoxChart boxChart2(boolean fixedAxis, int style, Integer maxBoxWidth) {
+		JBoxChart boxChart = new JBoxChart((style == JBoxChart.BOX_CHART_STYLE_VERTICAL ? "Vertical" : "Horozontal") + " BoxChart" + (maxBoxWidth == null ? "" : (" max " + maxBoxWidth + "px")), style);
 		
 		boxChart.chartAddDataSet("Blue", Color.BLUE);
 		
@@ -1122,6 +1122,10 @@ public class Test {
 			boxChart.chartSetValueAxis(-30, 25, 5, 0);
 		}
 		
+		if (maxBoxWidth != null) {
+			boxChart.setMaxBoxWidth(maxBoxWidth);
+		}
+		
 		return boxChart;
 	}
 	
@@ -1255,13 +1259,13 @@ public class Test {
 		System.out.println(dummyChart.chartGetVersion());
 		System.out.println(dummyChart.chartGetLicense());
 		
-		t.showCharts("Bar Charts Fixed Axis", t.barChartsFixedAxis());
-		t.showCharts("Bar Charts Free Axis", t.barChartsFreeAxis());
-		t.showCharts("Pie Charts", t.pieCharts());
+		//t.showCharts("Bar Charts Fixed Axis", t.barChartsFixedAxis());
+		//t.showCharts("Bar Charts Free Axis", t.barChartsFreeAxis());
+		//t.showCharts("Pie Charts", t.pieCharts());
 		t.showCharts("Box Charts", t.boxCharts());
-		t.showCharts("Example Line Charts", t.exampleLineCharts());
-		t.showCharts("Example Bar Charts", t.exampleBarCharts());
-		t.showCharts("Example Scatter Charts", t.exampleScatterCharts());
+		//t.showCharts("Example Line Charts", t.exampleLineCharts());
+		//t.showCharts("Example Bar Charts", t.exampleBarCharts());
+		//t.showCharts("Example Scatter Charts", t.exampleScatterCharts());
 	}
 
 }

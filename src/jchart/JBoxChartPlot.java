@@ -43,6 +43,8 @@ class JBoxChartPlot extends JChartPlot {
 	
 	private Color axisColor = Color.BLACK;
 	private Font axisFont = new Font("Arial", Font.PLAIN, 10);
+	
+	private int maxBoxWidth = Integer.MAX_VALUE;
 
 	
 	public JBoxChartPlot(String name, int boxChartStyle) {
@@ -109,6 +111,11 @@ class JBoxChartPlot extends JChartPlot {
 	
 	public void setAxisFont(Font font) {
 		axisFont = font;
+	}
+	
+	
+	public void setMaxBoxWidth(int maxBoxWidth) {
+		this.maxBoxWidth = maxBoxWidth;
 	}
 	
 	
@@ -267,7 +274,7 @@ class JBoxChartPlot extends JChartPlot {
 					graphics.drawString(valueAxisLabel, Math.max(MARGIN, verticalAxisX - (fontMetrics.stringWidth(valueAxisLabel) / 2)), leftBottomY - height - AXIS_VALUE_GAP);
 				}
 				
-				// Draw bars
+				// Draw boxes
 				for (int dataSetNr = 0; dataSetNr < orderedDataSets.size(); dataSetNr++) {
 					String dataSetName = orderedDataSets.get(dataSetNr);
 					Color dataSetColor = dataSets.get(dataSetName); 
@@ -380,14 +387,15 @@ class JBoxChartPlot extends JChartPlot {
 					int minimumY = valueToPosition(minimum, leftBottomY, leftBottomY - height, vAxis.get(0), vAxis.get(vAxis.size() - 1));
 					int maximumY = valueToPosition(maximum, leftBottomY, leftBottomY - height, vAxis.get(0), vAxis.get(vAxis.size() - 1));
 
-					int barX = leftBottomX + DATASET_MARGIN + (dataSetNr * (barWidth + DATASET_MARGIN));
-					int whiskerX = barX + (barWidth / 2);
+					int barX = leftBottomX + DATASET_MARGIN + (dataSetNr * (barWidth + DATASET_MARGIN)) + (barWidth / 2) - (Math.min(barWidth, maxBoxWidth) / 2);
+					int finalBarWidth = Math.min(barWidth, maxBoxWidth);
+					int whiskerX = barX + (finalBarWidth / 2);
 
-					graphics.fillRect(barX, p75Y, barWidth, Math.abs(p75Y - p25Y));
+					graphics.fillRect(barX, p75Y, finalBarWidth, Math.abs(p75Y - p25Y));
 					graphics.drawLine(whiskerX, minimumY, whiskerX, p25Y);
-					graphics.drawLine(barX, minimumY, barX + barWidth - 1, minimumY);
+					graphics.drawLine(barX, minimumY, barX + finalBarWidth - 1, minimumY);
 					graphics.drawLine(whiskerX, p75Y, whiskerX, maximumY);
-					graphics.drawLine(barX, maximumY, barX + barWidth - 1, maximumY);
+					graphics.drawLine(barX, maximumY, barX + finalBarWidth - 1, maximumY);
 					
 					// luminance: sqrt( 0.299*R^2 + 0.587*G^2 + 0.114*B^2 )
 					double rgbLuminance = Math.sqrt((0.299 * Math.pow(dataSetColor.getRed(),2.0)) + (0.587 * Math.pow(dataSetColor.getGreen(),2.0)) + (0.114 * Math.pow(dataSetColor.getBlue(),2.0)));
@@ -397,7 +405,7 @@ class JBoxChartPlot extends JChartPlot {
 					else {
 						graphics.setColor(Color.BLACK);
 					}
-					graphics.drawLine(barX, medianY, barX + barWidth - 1, medianY);
+					graphics.drawLine(barX, medianY, barX + finalBarWidth - 1, medianY);
 				}
 			}
 		}
