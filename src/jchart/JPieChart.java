@@ -39,7 +39,8 @@ public class JPieChart extends JChart {
 
 	/**
 	 * Creates a pie chart with the specified name.
-	 * @param name The name of the chart.
+	 * @param name The name of the pie chart.
+	 * @param pieChartStyle The style of the pie chart. JPieChart.PIE_CHART_STYLE_2D, or JPieChart.PIE_CHART_STYLE_3D. 
 	 */
 	public JPieChart(String name, int pieChartStyle) {
 		super(name);
@@ -87,7 +88,7 @@ public class JPieChart extends JChart {
 	
 	
 	/**
-	 * Sets the font of the value labeles.
+	 * Sets the font of the value labels.
 	 * @param font The font.
 	 */
 	public void chartSetLabelFont(Font font) {
@@ -102,6 +103,15 @@ public class JPieChart extends JChart {
 	 */
 	public void chartSetOutlineColor(Color color) {
 		((JPieChartPlot) chartPlot).setOutlineColor(color);
+	}
+	
+	
+	/**
+	 * Set the maximum height in pixels of the pie chart.
+	 * @param maxHeight
+	 */
+	public void setMax3DPieChartHeight(int maxHeight) {
+		((JPieChartPlot) chartPlot).setMax3DPieChartHeight(maxHeight);
 	}
 
 }
