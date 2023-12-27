@@ -50,6 +50,8 @@ class JBarChartPlot extends JChartPlot {
 	private Color axisColor = Color.BLACK;
 	private Font axisFont = new Font("Arial", Font.PLAIN, 10);
 	
+	private int maxBarWidth = Integer.MAX_VALUE;
+	
 
 	public JBarChartPlot(String name, int barChartStyle) {
 		super(name);
@@ -115,6 +117,11 @@ class JBarChartPlot extends JChartPlot {
 	
 	public void setAxisFont(Font font) {
 		axisFont = font;
+	}
+	
+	
+	public void setMaxBarWidth(int maxBarWidth) {
+		this.maxBarWidth = maxBarWidth;
 	}
 	
 	
@@ -276,6 +283,9 @@ class JBarChartPlot extends JChartPlot {
 				showError(graphics, "<html>BarChart '" + name + "'<br>Data set error:<br>Too many buckets and/or data sets.</html>"); 
 			}
 			else {
+				barWidth = Math.min(barWidth, maxBarWidth);
+				int finalBucketWidth = barWidth * dataSets.keySet().size() + (2 * BUCKET_MARGIN);
+				
 				// Draw bars
 				List<String> orderedDataSets = new ArrayList<String>();
 				orderedDataSets.addAll(dataSetList);
@@ -289,7 +299,8 @@ class JBarChartPlot extends JChartPlot {
 						String bucket = buckets.get(bucketNr);
 						Double y = dataSet.get(dataSetName).get(bucket);
 						if (y != null) {
-							int barX = leftBottomX + (bucketNr * bucketWidth) + BUCKET_MARGIN + (dataSetNr * barWidth);
+							//int barX = leftBottomX + (bucketNr * bucketWidth) + BUCKET_MARGIN + (dataSetNr * barWidth);
+							int barX = leftBottomX + (bucketNr * bucketWidth) + BUCKET_MARGIN + (bucketWidth / 2) - (finalBucketWidth / 2) + (dataSetNr * barWidth);
 							int barY = valueToPosition(y, leftBottomY, leftBottomY - height, vAxis.get(0), vAxis.get(vAxis.size() - 1));
 							if (Math.abs(barY - horizontalAxisY) > 0) {
 								graphics.fillRect(barX, Math.min(horizontalAxisY, barY), barWidth, Math.abs(barY - horizontalAxisY));
@@ -467,6 +478,9 @@ class JBarChartPlot extends JChartPlot {
 				showError(graphics, "<html>BarChart '" + name + "'<br>Data set error:<br>Too many buckets and/or data sets.</html>");
 			}
 			else {
+				barHeight = Math.min(barHeight, maxBarWidth);
+				int finalBucketHeight = barHeight * dataSets.keySet().size() + (2 * BUCKET_MARGIN);
+				
 				// Draw bars
 				List<String> orderedDataSets = new ArrayList<String>();
 				orderedDataSets.addAll(dataSetList);
@@ -481,7 +495,7 @@ class JBarChartPlot extends JChartPlot {
 						Double x = dataSet.get(dataSetName).get(bucket);
 						if (x != null) {
 							int barX = valueToPosition(x, leftBottomX, leftBottomX + width, hAxis.get(0), hAxis.get(hAxis.size() - 1));
-							int barY = leftBottomY - height + (bucketNr * bucketHeight) + BUCKET_MARGIN + (dataSetNr * barHeight);
+							int barY = leftBottomY - height + (bucketNr * bucketHeight) + BUCKET_MARGIN + (bucketHeight /2) - (finalBucketHeight / 2) + (dataSetNr * barHeight);
 							if (Math.abs(barX - verticalAxisX) > 0) {
 								graphics.fillRect(Math.min(verticalAxisX, barX), barY, Math.abs(barX - verticalAxisX), barHeight);
 							}
@@ -667,6 +681,9 @@ class JBarChartPlot extends JChartPlot {
 					showError(graphics, "<html>BarChart '" + name + "'<br>Data set error:<br>Too many buckets and/or data sets.</html>"); 
 				}
 				else {
+					barWidth = Math.min(barWidth, maxBarWidth);
+					int finalBucketWidth = barWidth + (2 * BUCKET_MARGIN);
+					
 					// Draw bars
 					List<String> orderedDataSets = new ArrayList<String>();
 					orderedDataSets.addAll(dataSetList);
@@ -677,7 +694,7 @@ class JBarChartPlot extends JChartPlot {
 						Double lastY = 0.0;
 						int lastBarY = horizontalAxisY; 
 						String bucket = buckets.get(bucketNr);
-						int barX = leftBottomX + (bucketNr * bucketWidth) + BUCKET_MARGIN;
+						int barX = leftBottomX + (bucketNr * bucketWidth) + BUCKET_MARGIN + (bucketWidth / 2) - (finalBucketWidth / 2);
 						for (int dataSetNr = 0; dataSetNr < orderedDataSets.size(); dataSetNr++) {
 							String dataSetName = orderedDataSets.get(dataSetNr);
 							graphics.setColor(dataSets.get(dataSetName));
@@ -877,6 +894,9 @@ class JBarChartPlot extends JChartPlot {
 					showError(graphics, "<html>BarChart '" + name + "'<br>Data set error:<br>Too many buckets and/or data sets.</html>");
 				}
 				else {
+					barHeight = Math.min(barHeight, maxBarWidth);
+					int finalBucketHeight = barHeight + (2 * BUCKET_MARGIN);
+					
 					// Draw bars
 					List<String> orderedDataSets = new ArrayList<String>();
 					orderedDataSets.addAll(dataSetList);
@@ -894,7 +914,7 @@ class JBarChartPlot extends JChartPlot {
 							if (x != null) {
 								Double newX = lastX + x;
 								int barX = valueToPosition(newX, leftBottomX, leftBottomX + width, hAxis.get(0), hAxis.get(hAxis.size() - 1));
-								int barY = leftBottomY - height + (bucketNr * bucketHeight) + BUCKET_MARGIN;
+								int barY = leftBottomY - height + (bucketNr * bucketHeight) + BUCKET_MARGIN + (bucketHeight / 2) - (finalBucketHeight / 2);
 								if (Math.abs(barX - lastX) > 0) {
 									graphics.fillRect(lastBarX, barY, barX - lastBarX, barHeight);
 								}
@@ -1074,6 +1094,9 @@ class JBarChartPlot extends JChartPlot {
 				showError(graphics, "<html>BarChart '" + name + "'<br>Data set error:<br>Too many buckets and/or data sets.</html>");
 			}
 			else {
+				barWidth = Math.min(barWidth, maxBarWidth);
+				int finalBucketWidth = barWidth * dataSets.keySet().size() + (2 * BUCKET_MARGIN);
+				
 				// Set axis color
 				graphics.setColor(axisColor);
 				
@@ -1114,7 +1137,7 @@ class JBarChartPlot extends JChartPlot {
 						String bucket = buckets.get(bucketNr);
 						Double y = dataSet.get(dataSetName).get(bucket);
 						if (y != null) {
-							int barX = leftBottomX + (bucketNr * bucketWidth) + BUCKET_MARGIN + (dataSetNr * barWidth) + BAR_SHIFT_X;
+							int barX = leftBottomX + (bucketNr * bucketWidth) + BUCKET_MARGIN + (dataSetNr * barWidth) + BAR_SHIFT_X + (bucketWidth / 2) - (finalBucketWidth / 2);
 							int barY = valueToPosition(y, leftBottomY, leftBottomY - height + (2 * BAR_SHIFT_Y) + BAR_DEPTH_Y, vAxis.get(0), vAxis.get(vAxis.size() - 1));
 							if (Math.abs(barY - horizontalAxisY) > 0) {
 								graphics.setColor(color);
@@ -1297,6 +1320,9 @@ class JBarChartPlot extends JChartPlot {
 				showError(graphics, "<html>BarChart '" + name + "'<br>Data set error:<br>Too many buckets and/or data sets.</html>");
 			}
 			else {
+				barHeight = Math.min(barHeight, maxBarWidth);
+				int finalBucketHeight = barHeight * dataSets.keySet().size() + (2 * BUCKET_MARGIN);
+				
 				// Set axis color
 				graphics.setColor(axisColor);
 				
@@ -1338,7 +1364,7 @@ class JBarChartPlot extends JChartPlot {
 						Double x = dataSet.get(dataSetName).get(bucket);
 						if (x != null) {
 							int barX = valueToPosition(x, leftBottomX, leftBottomX + width - (2 * BAR_SHIFT_X) - BAR_DEPTH_X, hAxis.get(0), hAxis.get(hAxis.size() - 1));
-							int barY = horizontalAxisY - height + (2 * BAR_SHIFT_Y) + BAR_DEPTH_Y + (bucketNr * bucketHeight) + BUCKET_MARGIN + (dataSetNr * barHeight);
+							int barY = horizontalAxisY - height + (2 * BAR_SHIFT_Y) + BAR_DEPTH_Y + (bucketNr * bucketHeight) + BUCKET_MARGIN + (bucketHeight / 2) - (finalBucketHeight / 2) + (dataSetNr * barHeight);
 							if (Math.abs(barX - verticalAxisX) > 0) {
 								graphics.setColor(color);
 								graphics.fillRect(Math.min(verticalAxisX, barX) + BAR_SHIFT_X, barY - BAR_SHIFT_Y, Math.abs(barX - verticalAxisX), barHeight);
@@ -1529,6 +1555,9 @@ class JBarChartPlot extends JChartPlot {
 					showError(graphics, "<html>BarChart '" + name + "'<br>Data set error:<br>Too many buckets and/or data sets.</html>");
 				}
 				else {
+					barWidth = Math.min(barWidth, maxBarWidth);
+					int finalBucketWidth = barWidth + (2 * BUCKET_MARGIN);
+					
 					// Set axis color
 					graphics.setColor(axisColor);
 					
@@ -1572,7 +1601,7 @@ class JBarChartPlot extends JChartPlot {
 							Double y = dataSet.get(dataSetName).get(bucket);
 							if (y != null) {
 								Double newY = lastY + y;
-								int barX = leftBottomX + (bucketNr * bucketWidth) + BUCKET_MARGIN + BAR_SHIFT_X;
+								int barX = leftBottomX + (bucketNr * bucketWidth) + BUCKET_MARGIN + (bucketWidth / 2) - (finalBucketWidth / 2) + BAR_SHIFT_X;
 								int barY = valueToPosition(newY, leftBottomY, leftBottomY - height + (2 * BAR_SHIFT_Y) + BAR_DEPTH_Y, vAxis.get(0), vAxis.get(vAxis.size() - 1));
 								if ((lastBarY - barY) > 0) {
 									graphics.setColor(color);
@@ -1771,6 +1800,9 @@ class JBarChartPlot extends JChartPlot {
 					showError(graphics, "<html>BarChart '" + name + "'<br>Data set error:<br>Too many buckets and/or data sets.</html>");
 				}
 				else {
+					barHeight = Math.min(barHeight, maxBarWidth);
+					int finalBucketHeight = barHeight + (2 * BUCKET_MARGIN);
+										
 					// Set axis color
 					graphics.setColor(axisColor);
 					
@@ -1815,7 +1847,7 @@ class JBarChartPlot extends JChartPlot {
 							if (x != null) {
 								Double newX = lastX + x;
 								int barX = valueToPosition(newX, leftBottomX, leftBottomX + width - (2 * BAR_SHIFT_X) - BAR_DEPTH_X, hAxis.get(0), hAxis.get(hAxis.size() - 1));
-								int barY = horizontalAxisY - height + (2 * BAR_SHIFT_Y) + BAR_DEPTH_Y + (bucketNr * bucketHeight) + BUCKET_MARGIN;
+								int barY = horizontalAxisY - height + (2 * BAR_SHIFT_Y) + BAR_DEPTH_Y + (bucketNr * bucketHeight) + BUCKET_MARGIN + (bucketHeight / 2) - (finalBucketHeight / 2);
 								if ((barX - lastBarX) > 0) {
 									graphics.setColor(color);
 									graphics.fillRect(lastBarX + BAR_SHIFT_X, barY - BAR_SHIFT_Y, barX - lastBarX, barHeight);

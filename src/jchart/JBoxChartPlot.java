@@ -235,6 +235,8 @@ class JBoxChartPlot extends JChartPlot {
 				showError(graphics, "<html>BoxChart '" + name + "'<br>Data set error:<br>Too many data sets.</html>"); 
 			}
 			else {
+				int finalBarWidth = Math.min(barWidth, maxBoxWidth);
+				
 				List<String> orderedDataSets = new ArrayList<String>();
 				orderedDataSets.addAll(dataSetList);
 				if (orderDataSets) {
@@ -387,7 +389,6 @@ class JBoxChartPlot extends JChartPlot {
 					int minimumY = valueToPosition(minimum, leftBottomY, leftBottomY - height, vAxis.get(0), vAxis.get(vAxis.size() - 1));
 					int maximumY = valueToPosition(maximum, leftBottomY, leftBottomY - height, vAxis.get(0), vAxis.get(vAxis.size() - 1));
 
-					int finalBarWidth = Math.min(barWidth, maxBoxWidth);
 					int barX = leftBottomX + DATASET_MARGIN + (dataSetNr * (barWidth + DATASET_MARGIN)) + (barWidth / 2) - (finalBarWidth / 2);
 					int whiskerX = barX + (finalBarWidth / 2);
 
@@ -520,6 +521,8 @@ class JBoxChartPlot extends JChartPlot {
 				showError(graphics, "<html>BoxChart '" + name + "'<br>Data set error:<br>Too many data sets.</html>");
 			}
 			else {
+				int finalBarHeight = Math.min(barHeight, maxBoxWidth);
+				
 				List<String> orderedDataSets = new ArrayList<String>();
 				orderedDataSets.addAll(dataSetList);
 				if (orderDataSets) {
@@ -671,7 +674,6 @@ class JBoxChartPlot extends JChartPlot {
 					int minimumX = valueToPosition(minimum, leftBottomX, leftBottomX + width, hAxis.get(0), hAxis.get(hAxis.size() - 1));
 					int maximumX = valueToPosition(maximum, leftBottomX, leftBottomX + width, hAxis.get(0), hAxis.get(hAxis.size() - 1));
 
-					int finalBarHeight = Math.min(barHeight, maxBoxWidth);
 					int barY = leftBottomY - height + (dataSetNr * dataSetHeight) + DATASET_MARGIN + (barHeight / 2) - (finalBarHeight / 2);
 					int whiskerY = barY + (finalBarHeight / 2);
 

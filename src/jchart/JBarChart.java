@@ -167,5 +167,14 @@ public class JBarChart extends JChart {
 	public void chartSetAxisFont(Font font) {
 		((JBarChartPlot) chartPlot).setAxisFont(font);
 	}
+	
+	
+	/**
+	 * Set the maximum width in pixels of the boxes in the box chart.
+	 * @param maxBarWidth
+	 */
+	public void setMaxBarWidth(int maxBarWidth) {
+		((JBarChartPlot) chartPlot).setMaxBarWidth(maxBarWidth);
+	}
 
 }

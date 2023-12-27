@@ -66,33 +66,33 @@ public class Test {
 	}
 	
 	
-	private List<JChart> barChartsFixedAxis() {
+	private List<JChart> barChartsFixedAxis(Integer maxBarWidth) {
 		List<JChart> charts = new ArrayList<JChart>();
 
-		charts.add(barChartFixedAxis(JBarChart.BAR_CHART_STYLE_VERTICAL));
-		charts.add(barChartFixedAxis(JBarChart.BAR_CHART_STYLE_HORIZONTAL));
-		charts.add(barChartFixedAxis(JBarChart.BAR_CHART_STYLE_STACKED_VERTICAL));
-		charts.add(barChartFixedAxis(JBarChart.BAR_CHART_STYLE_STACKED_HORIZONTAL));
-		charts.add(barChartFixedAxis(JBarChart.BAR_CHART_STYLE_3D_VERTICAL));
-		charts.add(barChartFixedAxis(JBarChart.BAR_CHART_STYLE_3D_HORIZONTAL));
-		charts.add(barChartFixedAxis(JBarChart.BAR_CHART_STYLE_3D_STACKED_VERTICAL));
-		charts.add(barChartFixedAxis(JBarChart.BAR_CHART_STYLE_3D_STACKED_HORIZONTAL));
+		charts.add(barChartFixedAxis(JBarChart.BAR_CHART_STYLE_VERTICAL, maxBarWidth));
+		charts.add(barChartFixedAxis(JBarChart.BAR_CHART_STYLE_HORIZONTAL, maxBarWidth));
+		charts.add(barChartFixedAxis(JBarChart.BAR_CHART_STYLE_STACKED_VERTICAL, maxBarWidth));
+		charts.add(barChartFixedAxis(JBarChart.BAR_CHART_STYLE_STACKED_HORIZONTAL, maxBarWidth));
+		charts.add(barChartFixedAxis(JBarChart.BAR_CHART_STYLE_3D_VERTICAL, maxBarWidth));
+		charts.add(barChartFixedAxis(JBarChart.BAR_CHART_STYLE_3D_HORIZONTAL, maxBarWidth));
+		charts.add(barChartFixedAxis(JBarChart.BAR_CHART_STYLE_3D_STACKED_VERTICAL, maxBarWidth));
+		charts.add(barChartFixedAxis(JBarChart.BAR_CHART_STYLE_3D_STACKED_HORIZONTAL, maxBarWidth));
 
 		return charts;
 	}
 	
 	
-	private List<JChart> barChartsFreeAxis() {
+	private List<JChart> barChartsFreeAxis(Integer maxBarWidth) {
 		List<JChart> charts = new ArrayList<JChart>();
 
-		charts.add(barChartFreeAxis(JBarChart.BAR_CHART_STYLE_VERTICAL));
-		charts.add(barChartFreeAxis(JBarChart.BAR_CHART_STYLE_HORIZONTAL));
-		charts.add(barChartFreeAxis(JBarChart.BAR_CHART_STYLE_STACKED_VERTICAL));
-		charts.add(barChartFreeAxis(JBarChart.BAR_CHART_STYLE_STACKED_HORIZONTAL));
-		charts.add(barChartFreeAxis(JBarChart.BAR_CHART_STYLE_3D_VERTICAL));
-		charts.add(barChartFreeAxis(JBarChart.BAR_CHART_STYLE_3D_HORIZONTAL));
-		charts.add(barChartFreeAxis(JBarChart.BAR_CHART_STYLE_3D_STACKED_VERTICAL));
-		charts.add(barChartFreeAxis(JBarChart.BAR_CHART_STYLE_3D_STACKED_HORIZONTAL));
+		charts.add(barChartFreeAxis(JBarChart.BAR_CHART_STYLE_VERTICAL, maxBarWidth));
+		charts.add(barChartFreeAxis(JBarChart.BAR_CHART_STYLE_HORIZONTAL, maxBarWidth));
+		charts.add(barChartFreeAxis(JBarChart.BAR_CHART_STYLE_STACKED_VERTICAL, maxBarWidth));
+		charts.add(barChartFreeAxis(JBarChart.BAR_CHART_STYLE_STACKED_HORIZONTAL, maxBarWidth));
+		charts.add(barChartFreeAxis(JBarChart.BAR_CHART_STYLE_3D_VERTICAL, maxBarWidth));
+		charts.add(barChartFreeAxis(JBarChart.BAR_CHART_STYLE_3D_HORIZONTAL, maxBarWidth));
+		charts.add(barChartFreeAxis(JBarChart.BAR_CHART_STYLE_3D_STACKED_VERTICAL, maxBarWidth));
+		charts.add(barChartFreeAxis(JBarChart.BAR_CHART_STYLE_3D_STACKED_HORIZONTAL, maxBarWidth));
 
 		return charts;
 	}
@@ -155,18 +155,18 @@ public class Test {
 	}
 	
 	
-	private List<JChart> exampleBarCharts() {
+	private List<JChart> exampleBarCharts(Integer maxBarWidth) {
 		List<JChart> charts = new ArrayList<JChart>();
 		
-		charts.add(barChartFreeAxis(JBarChart.BAR_CHART_STYLE_VERTICAL));
-		charts.add(barChartFreeAxis(JBarChart.BAR_CHART_STYLE_HORIZONTAL));
-		charts.add(barChartFreeAxis(JBarChart.BAR_CHART_STYLE_STACKED_VERTICAL));
-		charts.add(barChartFreeAxis(JBarChart.BAR_CHART_STYLE_STACKED_HORIZONTAL));
+		charts.add(barChartFreeAxis(JBarChart.BAR_CHART_STYLE_VERTICAL, maxBarWidth));
+		charts.add(barChartFreeAxis(JBarChart.BAR_CHART_STYLE_HORIZONTAL, maxBarWidth));
+		charts.add(barChartFreeAxis(JBarChart.BAR_CHART_STYLE_STACKED_VERTICAL, maxBarWidth));
+		charts.add(barChartFreeAxis(JBarChart.BAR_CHART_STYLE_STACKED_HORIZONTAL, maxBarWidth));
 		
-		charts.add(barChartFreeAxis(JBarChart.BAR_CHART_STYLE_3D_VERTICAL));
-		charts.add(barChartFreeAxis(JBarChart.BAR_CHART_STYLE_3D_HORIZONTAL));
-		charts.add(barChartFreeAxis(JBarChart.BAR_CHART_STYLE_3D_STACKED_VERTICAL));
-		charts.add(barChartFreeAxis(JBarChart.BAR_CHART_STYLE_3D_STACKED_HORIZONTAL));
+		charts.add(barChartFreeAxis(JBarChart.BAR_CHART_STYLE_3D_VERTICAL, maxBarWidth));
+		charts.add(barChartFreeAxis(JBarChart.BAR_CHART_STYLE_3D_HORIZONTAL, maxBarWidth));
+		charts.add(barChartFreeAxis(JBarChart.BAR_CHART_STYLE_3D_STACKED_VERTICAL, maxBarWidth));
+		charts.add(barChartFreeAxis(JBarChart.BAR_CHART_STYLE_3D_STACKED_HORIZONTAL, maxBarWidth));
 		
 		return charts;
 	}
@@ -530,7 +530,7 @@ public class Test {
 	}
 	
 	
-	private JBarChart barChartFixedAxis(int style) {
+	private JBarChart barChartFixedAxis(int style, Integer maxBarWidth) {
 		String name = "BarChart Fixed Axis";
 		name += ((style == JBarChart.BAR_CHART_STYLE_3D_HORIZONTAL) || (style == JBarChart.BAR_CHART_STYLE_3D_VERTICAL) || (style == JBarChart.BAR_CHART_STYLE_3D_STACKED_HORIZONTAL) || (style == JBarChart.BAR_CHART_STYLE_3D_STACKED_VERTICAL)) ? " 3D" : "";
 		name += ((style == JBarChart.BAR_CHART_STYLE_STACKED_HORIZONTAL) || (style == JBarChart.BAR_CHART_STYLE_3D_STACKED_HORIZONTAL) || (style == JBarChart.BAR_CHART_STYLE_STACKED_VERTICAL) || (style == JBarChart.BAR_CHART_STYLE_3D_STACKED_VERTICAL)) ? " Stacked" : "";
@@ -541,22 +541,22 @@ public class Test {
 		barChart.chartAddDataPoint("Bar 1", "A", 10);
 		barChart.chartAddDataPoint("Bar 1", "B", 12);
 		barChart.chartAddDataPoint("Bar 1", "C", 5);
-		barChart.chartAddDataPoint("Bar 1", "D", 14);
-		barChart.chartAddDataPoint("Bar 1", "E", 8);
+		//barChart.chartAddDataPoint("Bar 1", "D", 14);
+		//barChart.chartAddDataPoint("Bar 1", "E", 8);
 		
 		barChart.chartAddDataSet("Bar 2", Color.BLUE);
 		barChart.chartAddDataPoint("Bar 2", "A", 15);
 		barChart.chartAddDataPoint("Bar 2", "B", 0);
 		//barChart.chartAddDataPoint("Bar 2", "C", -7);
 		barChart.chartAddDataPoint("Bar 2", "C", 7);
-		barChart.chartAddDataPoint("Bar 2", "D", 9);
-		barChart.chartAddDataPoint("Bar 2", "E", 3);
+		//barChart.chartAddDataPoint("Bar 2", "D", 9);
+		//barChart.chartAddDataPoint("Bar 2", "E", 3);
 		
 		List<String> hAxis = new ArrayList<String>();
 		hAxis.add("B");
-		hAxis.add("D");
-		hAxis.add("A");
-		hAxis.add("E");
+		//hAxis.add("D");
+		//hAxis.add("A");
+		//hAxis.add("E");
 		hAxis.add("C");
 		barChart.chartSetBucketAxis(hAxis);
 		//barChart.chartSetValueAxis(-10, 20, 1, TEST_PRECISION);
@@ -570,11 +570,15 @@ public class Test {
 		}
 		barChart.chartSetLegendEnabled(SHOW_LEGEND);
 		
+		if (maxBarWidth != null) {
+			barChart.setMaxBarWidth(maxBarWidth);
+		}
+		
 		return barChart;
 	}
 	
 	
-	private JBarChart barChartFreeAxis(int style) {
+	private JBarChart barChartFreeAxis(int style, Integer maxBarWidth) {
 		String name = "BarChart Free Axis";
 		name += ((style == JBarChart.BAR_CHART_STYLE_3D_HORIZONTAL) || (style == JBarChart.BAR_CHART_STYLE_3D_VERTICAL) || (style == JBarChart.BAR_CHART_STYLE_3D_STACKED_HORIZONTAL) || (style == JBarChart.BAR_CHART_STYLE_3D_STACKED_VERTICAL)) ? " 3D" : "";
 		name += ((style == JBarChart.BAR_CHART_STYLE_STACKED_HORIZONTAL) || (style == JBarChart.BAR_CHART_STYLE_3D_STACKED_HORIZONTAL) || (style == JBarChart.BAR_CHART_STYLE_STACKED_VERTICAL) || (style == JBarChart.BAR_CHART_STYLE_3D_STACKED_VERTICAL)) ? " Stacked" : "";
@@ -585,15 +589,15 @@ public class Test {
 		barChart.chartAddDataPoint("Bar 1", "A", 10);
 		barChart.chartAddDataPoint("Bar 1", "B", 12);
 		barChart.chartAddDataPoint("Bar 1", "C", 5);
-		barChart.chartAddDataPoint("Bar 1", "D", 14);
-		barChart.chartAddDataPoint("Bar 1", "E", 8);
+		//barChart.chartAddDataPoint("Bar 1", "D", 14);
+		//barChart.chartAddDataPoint("Bar 1", "E", 8);
 		
 		barChart.chartAddDataSet("Bar 2", Color.BLUE);
 		barChart.chartAddDataPoint("Bar 2", "A", 15);
 		barChart.chartAddDataPoint("Bar 2", "B", 0);
 		barChart.chartAddDataPoint("Bar 2", "C", 7);
-		barChart.chartAddDataPoint("Bar 2", "D", 9);
-		barChart.chartAddDataPoint("Bar 2", "E", 3);
+		//barChart.chartAddDataPoint("Bar 2", "D", 9);
+		//barChart.chartAddDataPoint("Bar 2", "E", 3);
 		
 		barChart.chartSetBucketAxisLabel("Unit X");
 		barChart.chartSetValueAxisLabel("Unit Y");
@@ -602,6 +606,10 @@ public class Test {
 			barChart.chartSetTitle(barChart.chartGetName(), TITLE_ALIGNMENT, TITLE_POSITION);
 		}
 		barChart.chartSetLegendEnabled(SHOW_LEGEND);
+		
+		if (maxBarWidth != null) {
+			barChart.setMaxBarWidth(maxBarWidth);
+		}
 		
 		return barChart;
 	}
@@ -1259,13 +1267,15 @@ public class Test {
 		System.out.println(dummyChart.chartGetVersion());
 		System.out.println(dummyChart.chartGetLicense());
 		
-		t.showCharts("Bar Charts Fixed Axis", t.barChartsFixedAxis());
-		t.showCharts("Bar Charts Free Axis", t.barChartsFreeAxis());
-		t.showCharts("Pie Charts", t.pieCharts());
-		t.showCharts("Box Charts", t.boxCharts());
-		t.showCharts("Example Line Charts", t.exampleLineCharts());
-		t.showCharts("Example Bar Charts", t.exampleBarCharts());
-		t.showCharts("Example Scatter Charts", t.exampleScatterCharts());
+		t.showCharts("Bar Charts Fixed Axis", t.barChartsFixedAxis(null));
+		t.showCharts("Bar Charts Fixed Axis", t.barChartsFixedAxis(20));
+		t.showCharts("Bar Charts Free Axis", t.barChartsFreeAxis(null));
+		t.showCharts("Bar Charts Free Axis", t.barChartsFreeAxis(20));
+		//t.showCharts("Pie Charts", t.pieCharts());
+		//t.showCharts("Box Charts", t.boxCharts());
+		//t.showCharts("Example Line Charts", t.exampleLineCharts());
+		//t.showCharts("Example Bar Charts", t.exampleBarCharts());
+		//t.showCharts("Example Scatter Charts", t.exampleScatterCharts());
 	}
 
 }
