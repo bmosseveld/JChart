@@ -32,7 +32,7 @@ The JavaDocs are included in the doc folder in the .jar file.<br>
 <br>
 **Examples**
 
-<img src="JChart Examples 1.png" alt="JChart Examples" title="JChart Examples 2" />
-<br>
-<br>
-<img src="JChart Examples 2.png" alt="JChart Examples" title="JChart Examples 2" />
+<img src="JChart Examples.png" alt="JChart Examples" title="JChart Examples" />
+
+The library also contains a JChartDemo class. When you create an instance of this class
+it creates a number of windows with all kinds of examples.

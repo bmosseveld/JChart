@@ -108,7 +108,7 @@ public class JPieChart extends JChart {
 	
 	/**
 	 * Set the maximum height in pixels of the disk of the pie chart.
-	 * @param maxHeight
+	 * @param maxHeight The maximum height (thickness) of the pie in pixels.
 	 */
 	public void setMax3DPieChartHeight(int maxHeight) {
 		((JPieChartPlot) chartPlot).setMax3DPieChartHeight(maxHeight);

@@ -138,7 +138,7 @@ public class JBoxChart extends JChart {
 	
 	/**
 	 * Set the maximum width in pixels of the boxes in the box chart.
-	 * @param maxBoxWidth
+	 * @param maxBoxWidth The maximum width (thickness) of the boxes in pixels.
 	 */
 	public void setMaxBoxWidth(int maxBoxWidth) {
 		((JBoxChartPlot) chartPlot).setMaxBoxWidth(maxBoxWidth);

@@ -32,10 +32,6 @@ package jchart;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Robot;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +48,7 @@ public abstract class JChart extends JPanel {
 	private static final long serialVersionUID = -3612624162463792308L;
 	
 	
-	private static final String VERSION = "1.0.0";
+	private static final String VERSION = "1.1.0";
 
 	
 	/**

@@ -171,7 +171,7 @@ public class JBarChart extends JChart {
 	
 	/**
 	 * Set the maximum width in pixels of the bars in the bar chart.
-	 * @param maxBarWidth
+	 * @param maxBarWidth The maximum width (thickness) of the bars in pixels.
 	 */
 	public void setMaxBarWidth(int maxBarWidth) {
 		((JBarChartPlot) chartPlot).setMaxBarWidth(maxBarWidth);
