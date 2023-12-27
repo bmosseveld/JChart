@@ -535,6 +535,7 @@ public class Test {
 		name += ((style == JBarChart.BAR_CHART_STYLE_3D_HORIZONTAL) || (style == JBarChart.BAR_CHART_STYLE_3D_VERTICAL) || (style == JBarChart.BAR_CHART_STYLE_3D_STACKED_HORIZONTAL) || (style == JBarChart.BAR_CHART_STYLE_3D_STACKED_VERTICAL)) ? " 3D" : "";
 		name += ((style == JBarChart.BAR_CHART_STYLE_STACKED_HORIZONTAL) || (style == JBarChart.BAR_CHART_STYLE_3D_STACKED_HORIZONTAL) || (style == JBarChart.BAR_CHART_STYLE_STACKED_VERTICAL) || (style == JBarChart.BAR_CHART_STYLE_3D_STACKED_VERTICAL)) ? " Stacked" : "";
 		name += ((style == JBarChart.BAR_CHART_STYLE_HORIZONTAL) || (style == JBarChart.BAR_CHART_STYLE_3D_HORIZONTAL) || (style == JBarChart.BAR_CHART_STYLE_STACKED_HORIZONTAL) || (style == JBarChart.BAR_CHART_STYLE_3D_STACKED_HORIZONTAL)) ? " Horizontal" : " Vertical";
+		if (maxBarWidth != null) name += " max bar width " + maxBarWidth + "px";
 		JBarChart barChart = new JBarChart(name, style);
 		
 		barChart.chartAddDataSet("Bar 1", Color.RED);
@@ -583,6 +584,7 @@ public class Test {
 		name += ((style == JBarChart.BAR_CHART_STYLE_3D_HORIZONTAL) || (style == JBarChart.BAR_CHART_STYLE_3D_VERTICAL) || (style == JBarChart.BAR_CHART_STYLE_3D_STACKED_HORIZONTAL) || (style == JBarChart.BAR_CHART_STYLE_3D_STACKED_VERTICAL)) ? " 3D" : "";
 		name += ((style == JBarChart.BAR_CHART_STYLE_STACKED_HORIZONTAL) || (style == JBarChart.BAR_CHART_STYLE_3D_STACKED_HORIZONTAL) || (style == JBarChart.BAR_CHART_STYLE_STACKED_VERTICAL) || (style == JBarChart.BAR_CHART_STYLE_3D_STACKED_VERTICAL)) ? " Stacked" : "";
 		name += ((style == JBarChart.BAR_CHART_STYLE_HORIZONTAL) || (style == JBarChart.BAR_CHART_STYLE_3D_HORIZONTAL) || (style == JBarChart.BAR_CHART_STYLE_STACKED_HORIZONTAL) || (style == JBarChart.BAR_CHART_STYLE_3D_STACKED_HORIZONTAL)) ? " Horizontal" : " Vertical";
+		if (maxBarWidth != null) name += " max bar width " + maxBarWidth + "px";
 		JBarChart barChart = new JBarChart(name, style);
 		
 		barChart.chartAddDataSet("Bar 1", Color.RED);
