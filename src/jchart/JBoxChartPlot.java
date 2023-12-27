@@ -387,8 +387,8 @@ class JBoxChartPlot extends JChartPlot {
 					int minimumY = valueToPosition(minimum, leftBottomY, leftBottomY - height, vAxis.get(0), vAxis.get(vAxis.size() - 1));
 					int maximumY = valueToPosition(maximum, leftBottomY, leftBottomY - height, vAxis.get(0), vAxis.get(vAxis.size() - 1));
 
-					int barX = leftBottomX + DATASET_MARGIN + (dataSetNr * (barWidth + DATASET_MARGIN)) + (barWidth / 2) - (Math.min(barWidth, maxBoxWidth) / 2);
 					int finalBarWidth = Math.min(barWidth, maxBoxWidth);
+					int barX = leftBottomX + DATASET_MARGIN + (dataSetNr * (barWidth + DATASET_MARGIN)) + (barWidth / 2) - (finalBarWidth / 2);
 					int whiskerX = barX + (finalBarWidth / 2);
 
 					graphics.fillRect(barX, p75Y, finalBarWidth, Math.abs(p75Y - p25Y));
@@ -671,14 +671,15 @@ class JBoxChartPlot extends JChartPlot {
 					int minimumX = valueToPosition(minimum, leftBottomX, leftBottomX + width, hAxis.get(0), hAxis.get(hAxis.size() - 1));
 					int maximumX = valueToPosition(maximum, leftBottomX, leftBottomX + width, hAxis.get(0), hAxis.get(hAxis.size() - 1));
 
-					int barY = leftBottomY - height + (dataSetNr * dataSetHeight) + DATASET_MARGIN;
-					int whiskerY = barY + (barHeight / 2);
+					int finalBarHeight = Math.min(barHeight, maxBoxWidth);
+					int barY = leftBottomY - height + (dataSetNr * dataSetHeight) + DATASET_MARGIN + (barHeight / 2) - (finalBarHeight / 2);
+					int whiskerY = barY + (finalBarHeight / 2);
 
-					graphics.fillRect(p25X, barY, Math.abs(p75X - p25X), barHeight);
+					graphics.fillRect(p25X, barY, Math.abs(p75X - p25X), finalBarHeight);
 					graphics.drawLine(minimumX, whiskerY, p25X, whiskerY);
-					graphics.drawLine(minimumX, barY, minimumX, barY + barHeight - 1);
+					graphics.drawLine(minimumX, barY, minimumX, barY + finalBarHeight - 1);
 					graphics.drawLine(p75X, whiskerY, maximumX, whiskerY);
-					graphics.drawLine(maximumX, barY, maximumX, barY + barHeight - 1);
+					graphics.drawLine(maximumX, barY, maximumX, barY + finalBarHeight - 1);
 					
 					// luminance: sqrt( 0.299*R^2 + 0.587*G^2 + 0.114*B^2 )
 					double rgbLuminance = Math.sqrt((0.299 * Math.pow(dataSetColor.getRed(),2.0)) + (0.587 * Math.pow(dataSetColor.getGreen(),2.0)) + (0.114 * Math.pow(dataSetColor.getBlue(),2.0)));
@@ -688,7 +689,7 @@ class JBoxChartPlot extends JChartPlot {
 					else {
 						graphics.setColor(Color.BLACK);
 					}
-					graphics.drawLine(medianX, barY, medianX, barY + barHeight - 1);
+					graphics.drawLine(medianX, barY, medianX, barY + finalBarHeight - 1);
 				}
 			}
 		}
