@@ -21,7 +21,7 @@ It supports the following types of charts:
 - Bar charts (sub class JBarChart)
 - Pie charts (sub class JPieChart)
 - Scatter charts (sub class JScatterChart)
-- Box charts (subclass JBoxChart)
+- Box charts (sub class JBoxChart)
 
 The basic principle is that you first create an instance of the preferred chart class.<br>
 After that you add the data sets with the method chartAddDataSet and then the data points with chartAddDataPoint.<br>
