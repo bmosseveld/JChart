@@ -27,7 +27,14 @@ The basic principle is that you first create an instance of the preferred chart 
 After that you add the data sets with the method chartAddDataSet and then the data points with chartAddDataPoint.<br>
 There are also several methods to set the style and colors of the chart.<br>
 By right clicking on a chart you can save it as a .png image.<br>
-The JavaDocs are included in the doc folder in the .jar file.<br>
+The JavaDocs are included in the doc folder in the .jar file.
+<br>
+<br>
+<br>
+**Requirements**
+
+The JChart requires Java 8.
+<br>
 <br>
 <br>
 **Examples**
