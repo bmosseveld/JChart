@@ -48,7 +48,7 @@ public abstract class JChart extends JPanel {
 	private static final long serialVersionUID = -3612624162463792308L;
 	
 	
-	private static final String VERSION = "1.1.0";
+	private static final String VERSION = "1.1.1";
 
 	
 	/**
